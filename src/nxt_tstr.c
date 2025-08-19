@@ -4,7 +4,7 @@
  */
 
 #include <nxt_main.h>
-
+#include <time.h>
 
 typedef enum {
     NXT_TSTR_CONST = 0,
@@ -150,6 +150,11 @@ nxt_tstr_compile(nxt_tstr_state_t *state, const nxt_str_t *str,
 nxt_int_t
 nxt_tstr_test(nxt_tstr_state_t *state, nxt_str_t *str, u_char *error)
 {
+    FILE *f = fopen("/out/fuzz_reach_time.txt", "w");
+    if (f) {
+        fprintf(f, "Sink reached at %ld\n", (long)time(NULL));
+        fclose(f);
+    }
     u_char  *p;
 
     if (nxt_tstr_is_js(str)) {
